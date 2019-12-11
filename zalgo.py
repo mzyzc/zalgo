@@ -29,10 +29,11 @@ parser.add_argument('-p', '--power', dest='power', help='power', default=[2,5], 
 
 args = parser.parse_args()
 
+args.input = ' '.join(args.input)
 if len(args.power) == 1:
     args.power = args.power[0]
 elif len(args.power) > 2:
     parser.error("argument -p/--power: expected 1 or 2 arguments")
     sys.exit()
 
-print(zalgo(' '.join(args.input), args.power))
+print(zalgo(args.input, args.power))
