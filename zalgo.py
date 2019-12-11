@@ -2,7 +2,7 @@
 
 import sys
 import random
-from ast import literal_eval as make_tuple
+import argparse
 
 def zalgo(text, intensity=(2, 5)):
     """Adds Unicode combining characters to each character in some text."""
@@ -22,16 +22,17 @@ def zalgo(text, intensity=(2, 5)):
     return ''.join(output)
 
 
-if len(sys.argv) < 2:
-    print('Usage: zalgo.py text [intensity]')
-    sys.exit()
-text = sys.argv[1]
+parser = argparse.ArgumentParser()
 
-if len(sys.argv) == 2:
-    print(zalgo(text))
-elif len(sys.argv) == 3:
-    try:
-        intensity = int(sys.argv[2])
-    except ValueError:
-        intensity = make_tuple(sys.argv[2])
-    print(zalgo(text, intensity))
+parser.add_argument('-i', '--input', dest='input', help='input', nargs='+', required=True)
+parser.add_argument('-p', '--power', dest='power', help='power', default=[2,5], type=int, nargs='+')  # One or two arguments.
+
+args = parser.parse_args()
+
+if len(args.power) == 1:
+    args.power = args.power[0]
+elif len(args.power) > 2:
+    parser.error("argument -p/--power: expected 1 or 2 arguments")
+    sys.exit()
+
+print(zalgo(' '.join(args.input), args.power))
