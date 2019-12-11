@@ -27,11 +27,11 @@ if len(sys.argv) < 2:
     sys.exit()
 text = sys.argv[1]
 
-if len(sys.argv) == 3:
+if len(sys.argv) == 2:
+    print(zalgo(text))
+elif len(sys.argv) == 3:
     try:
         intensity = int(sys.argv[2])
     except ValueError:
         intensity = make_tuple(sys.argv[2])
     print(zalgo(text, intensity))
-else:
-    print(zalgo(text))
